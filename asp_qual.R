@@ -1,9 +1,6 @@
 Quality <- read.delim("~/Documents/Aspen/Quality.txt")
 
-convert <- function(x){
-  
-  
-}
+convert <- function(x){}
 
 Quality$fp <- as.factor(gsub("_.*", "", gsub(".*fp", "", Quality$Assembly.Directory) ) ) # fp
 Quality$fn <- as.factor(gsub("_.*", "", gsub(".*fn", "", Quality$Assembly.Directory) ) )# fn
@@ -24,11 +21,56 @@ BPtoMB <- function(x){
 
 library(ggplot2)
 
+ggplot(data = Quality, #specify input data
+       aes(x = Length.in.Basepairs, y = Contig.Count)) + #specify x and y
+  geom_point(aes(color = minsites, #data as points, specify color 
+                 shape = fp, #specify shape
+                 size = fn), #specify size
+             alpha = .6) + #add transparency to points so you can see overlaps
+  scale_size_manual(values = c(3, 5, 7)) + #specify size of points
+  facet_grid(minlen ~ pval, labeller = label_both) + #plot split into subplots w/ labels
+  theme_bw() + #change the aesthetics of graph with white background
+  scale_x_continuous(labels = function(x) x/1000000) + #convert bp to mb for x
+  labs(x = "Length (MB)", #x axis label
+       y = "Contig Count") + #y axis label
+  scale_color_manual(
+    values = c("#d7191c", "#fdae61", "#2c7bb6")) + #colors red, yellow, blue
+  scale_shape_discrete(solid = TRUE) #fill in shapes
+
+#creating the plot
+param_graph <- ggplot(data = Quality, #specify input data
+                      aes(x = Length.in.Basepairs, y = Contig.Count)) + #specify x and y
+  geom_point(aes(color = minlen, #data as points, specify color 
+                 shape = minsites, #specify shape
+                 size = pval), #specify size
+             alpha = .6) + #add transparency to points so you can see overlaps
+  scale_size_manual(values = c(3, 4, 5, 6, 7)) + #specify size of points
+  #  facet_grid(fp ~ fn, labeller = label_both) + #plot split into subplots w/ labels
+  theme_bw() + #change the aesthetics of graph with white background
+  scale_x_continuous(labels = function(x) x/1000000) + #convert bp to mb for x
+  labs(x = "Length (MB)", #x axis label
+       y = "Contig Count") + #y axis label
+  scale_color_manual(
+    values = c("#d7191c", "#fdae61", "#2c7bb6")) + #colors red, yellow, blue
+  scale_shape_discrete(solid = TRUE) #fill in shapes
+
+#save the plot
+ggsave(filename = "aspen_param_graph.png", #file extension will speciry type
+       plot = param_graph, #which plot to save
+       width = 190, #width of plot
+       height = 190, #height of plot
+       units = "mm", #units used for width and height 
+       dpi = 600) #resolution
+
+
+
+
+
 
 ggplot(data = Quality, aes(x = Length.in.Basepairs, y = Contig.Count)) +
-  geom_point(aes(color = minlen, shape = pval,
-                 size = minsites), alpha = .6) +
-  facet_grid(fp ~ fn, labeller = label_both) +
+  geom_point(aes(color = minlen, shape = minsites,
+                 size = pval), alpha = .6) +
+#  facet_grid(fp ~ fn, labeller = label_both) +
   theme_bw() +
   scale_x_continuous(labels = function(x) x/1000000) +
   labs(tittle = "Aspen Parameter Search", x = "Length (MB)", y = "Contig Count") +
