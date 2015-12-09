@@ -1,3 +1,10 @@
+#==============================================================================================#
+# Script created by Lindsay Chaney 2015 - lchaney@byu.edu
+# Script created in version R 3.2.1 
+# This is an earilier version of OMVis
+# Graphical visulaization of your paramater search
+#==============================================================================================#
+
 Quality <- read.delim("~/Documents/Aspen/Quality.txt")
 
 convert <- function(x){}

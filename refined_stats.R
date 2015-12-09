@@ -1,3 +1,12 @@
+#==============================================================================================#
+# Script created by Lindsay Chaney 2015 - lchaney@byu.edu
+# Script created in version R 3.2.1 
+# This script is used after you have a refined bionano assembly
+# It calculates number of rmaps, length of assembly
+# Min, Max, Average, and N50 for rmaps
+#==============================================================================================#
+
+
 map <- read.delim("~/Documents/Aspen/EXP_REFINEFINAL1.cmap", header = FALSE, comment.char = "#")
 names(map) <- c("CMapId", "ContigLength", "NumSites", "SiteID",
                 "LabelChannel", "Position", "StdDev", "Coverage",
@@ -23,4 +32,11 @@ unmap$cum_sum <- cumsum(unmap$ContigLength)
 unmap[unmap$cum_sum > max(unmap$cum_sum)/2,][1,]
 
 
-#
+#similar plot as Crocker Fig 2
+library(ggplot2)
+
+ggplot(data = unmap, aes(ContigLength)) + 
+  geom_histogram() +
+  scale_x_continuous(labels = function(x) x/1000) + #convert bp to kb for x
+  labs(x = "Length of Consesus Maps (KB)", #x axis label
+       y = "Genome Map Number") #y axis label

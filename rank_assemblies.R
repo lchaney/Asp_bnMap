@@ -1,3 +1,11 @@
+#==============================================================================================#
+# Script created by Aaron Sharp 2015
+# This script can be used to determine what are the best paramaters to use
+# It ranks each assembly by length and number of contigs
+# The 'best' assembly 
+#==============================================================================================#
+
+
 simp_stat <- read.table('~/Documents/Aspen/Quality.txt', 
                         header=T, row.names=1, sep="\t")
 
