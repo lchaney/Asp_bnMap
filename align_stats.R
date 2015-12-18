@@ -28,7 +28,7 @@ ggplot(data = data, #input data
               color = "black") + #black
   theme_bw() + #change the aesthetics of graph with white background
   labs(x = "Molecule Length (MB)", #x axis label
-       y = "Number of significant alignments") + #y axis label
+       y = "Number of alignments") + #y axis label
   scale_x_continuous(labels = function(x) x/1000000, #convert bp to mb for x
                      expand = c(0,0)) + #set so axis starts at 0
   scale_y_continuous(expand = c(0, 0)) + #set so axis starts at 0
